@@ -6,77 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Spinner
-        android:id="@+id/spinner01"
-        android:layout_width="88dp"
-        android:layout_height="217dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:entries="@array/codenumber"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner02"
-        android:layout_width="88dp"
-        android:layout_height="217dp"
-        android:entries="@array/codenumber"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner01"
-        app:layout_constraintStart_toEndOf="@+id/spinner01"
-        app:layout_constraintTop_toTopOf="@+id/spinner01" />
-
-    <Spinner
-        android:id="@+id/spinner03"
-        android:layout_width="88dp"
-        android:layout_height="217dp"
-        android:entries="@array/codenumber"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner02"
-        app:layout_constraintStart_toEndOf="@+id/spinner02"
-        app:layout_constraintTop_toTopOf="@+id/spinner02" />
-
-    <Spinner
-        android:id="@+id/spinner04"
-        android:layout_width="88dp"
-        android:layout_height="217dp"
-        android:entries="@array/codenumber"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner03"
-        app:layout_constraintStart_toEndOf="@+id/spinner03"
-        app:layout_constraintTop_toTopOf="@+id/spinner03" />
-
-
     <TextView
         android:id="@+id/textView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="_"
-        android:textSize="96sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/inputnum01"
+        app:layout_constraintTop_toBottomOf="@+id/inputnum01"
+        tools:text="ここに表示されます" />
+
+    <Button
+        android:id="@+id/button01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintStart_toEndOf="@+id/inputnum01"
+        app:layout_constraintTop_toTopOf="@+id/inputnum01" />
+
+    <EditText
+        android:id="@+id/inputnum01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="入力してください"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/history01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="history"
+        app:layout_constraintStart_toStartOf="@+id/textView01"
+        app:layout_constraintTop_toBottomOf="@+id/textView01" />
 
     <TextView
         android:id="@+id/textView02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="_"
-        android:textSize="96sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView01" />
-
-    <TextView
-        android:id="@+id/textView03"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="_"
-        android:textSize="96sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView02" />
-
-    <TextView
-        android:id="@+id/textView04"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="_"
-        android:textSize="96sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView03" />
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/history01"
+        app:layout_constraintTop_toBottomOf="@+id/history01" />
 </androidx.constraintlayout.widget.ConstraintLayout>
