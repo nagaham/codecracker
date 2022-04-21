@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         var numoftrials = 1 //挑戦回数をカウントする変数
         var outputtext = ""//出力用文字列
         var inputnumber = ""
+        var historynumber = ""
 
         //初期設定で自分の答えを ____ にする
         var yourans = mutableListOf<String>("_","_","_","_")
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.button01.setOnClickListener {
             inputnumber = binding.inputnum01.text.toString()
+            historynumber += inputnumber + "\n"
             outputtext = ""//出力用文字列を初期化
 
         //正解するまで繰り返す
@@ -70,6 +72,7 @@ class MainActivity : AppCompatActivity() {
             outputtext += "場所も数字も合っているのは $numofac 個。\n場所が違うものも含めて数字が合っているのが$numofcorrect 個\n"
             if(randnumber != inputnumber){
                 binding.textView01.text = outputtext
+                binding.history01.text = historynumber
                 numofac = 0
                 numofcorrect = 0
                 outputtext = ""
