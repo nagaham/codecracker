@@ -37,21 +37,19 @@ class MainActivity : AppCompatActivity() {
 
         binding.button01.setOnClickListener {
             inputnumber = binding.inputnum01.text.toString()
+            outputtext = ""//出力用文字列を初期化
 
         //正解するまで繰り返す
             if(inputnumber.length < 4 ){
                 inputnumber = "____"
                 outputtext = "入力が 4文字未満なので判定できませんでした\n"
-                binding.textView01.text = outputtext
             }
             else if(inputnumber.length > 4){
                 inputnumber = "____"
                 outputtext = "入力が 4文字よりも多かったので判定できませんでした\n"
-                binding.textView01.text = outputtext
             }
             else{
                 outputtext = "\n"
-                binding.textView01.text = outputtext
             }
             outputtext += "$numoftrials 回目のトライアルが終わりました\n"
             numoftrials++
@@ -70,12 +68,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             outputtext += "場所も数字も合っているのは $numofac 個。\n場所が違うものも含めて数字が合っているのが$numofcorrect 個\n"
+            if(randnumber != inputnumber){
+                binding.textView01.text = outputtext
+                numofac = 0
+                numofcorrect = 0
+                outputtext = ""
+            }
+            else{
+                outputtext += "Great!!!\n" + "$numoftrials 回目の挑戦で成功しました！\n"
+                binding.textView01.text = outputtext
+                outputtext = ""
+            }
 //        println(yourans.joinToString(separator = ""))
-            numofac = 0
-            numofcorrect = 0
         }
-            outputtext += "Great!!!\n" + "$numoftrials 回目の挑戦で成功しました！\n"
-            binding.textView02.text = outputtext
-            outputtext = ""
     }
 }

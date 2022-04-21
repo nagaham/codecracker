@@ -46,7 +46,15 @@
         android:id="@+id/textView02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="TextView02"
         app:layout_constraintStart_toStartOf="@+id/history01"
         app:layout_constraintTop_toBottomOf="@+id/history01" />
+
+    <TextView
+        android:id="@+id/textView03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView03"
+        app:layout_constraintStart_toStartOf="@+id/textView02"
+        app:layout_constraintTop_toBottomOf="@+id/textView02" />
 </androidx.constraintlayout.widget.ConstraintLayout>
