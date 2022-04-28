@@ -10,8 +10,8 @@
         android:id="@+id/textView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/inputnum01"
-        app:layout_constraintTop_toBottomOf="@+id/inputnum01"
+        app:layout_constraintStart_toStartOf="@+id/button01"
+        app:layout_constraintTop_toBottomOf="@+id/button01"
         tools:text="ここに表示されます" />
 
     <Button
@@ -26,10 +26,10 @@
         android:id="@+id/inputnum01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="入力してください"
+        android:hint="4桁入力してください"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,22 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="history"
-        app:layout_constraintStart_toStartOf="@+id/textView01"
-        app:layout_constraintTop_toBottomOf="@+id/textView01" />
+        app:layout_constraintStart_toStartOf="@+id/inputnum01"
+        app:layout_constraintTop_toBottomOf="@+id/inputnum01" />
 
-    <TextView
-        android:id="@+id/textView02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView02"
-        app:layout_constraintStart_toStartOf="@+id/history01"
-        app:layout_constraintTop_toBottomOf="@+id/history01" />
-
-    <TextView
-        android:id="@+id/textView03"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView03"
-        app:layout_constraintStart_toStartOf="@+id/textView02"
-        app:layout_constraintTop_toBottomOf="@+id/textView02" />
 </androidx.constraintlayout.widget.ConstraintLayout>

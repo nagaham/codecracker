@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
         //それぞれの文字が何個あるのかをカウントする
         var countofcorrectans = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について正解を収納
         var countofyournumber = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について自分の答えを収納
-        var numofac = 0
-        var numofcorrect = 0 //文字列の中で正解の数字が何個あるか
+        var perfectnum = 0
+        var closenum = 0 //文字列の中で正解の数字が何個あるか
         var numoftrials = 1 //挑戦回数をカウントする変数
         var outputtext = ""//出力用文字列
         var inputnumber = ""
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.button01.setOnClickListener {
             inputnumber = binding.inputnum01.text.toString()
-            historynumber += inputnumber + "\n"
+            historynumber += inputnumber
             outputtext = ""//出力用文字列を初期化
 
         //正解するまで繰り返す
@@ -58,23 +58,27 @@ class MainActivity : AppCompatActivity() {
             for(n in 0 .. 9) countofyournumber[n] = inputnumber.count{ it == (n+48).toChar() }
             for(n in 0 .. 9){
                 if(min(countofyournumber[n],countofcorrectans[n]) != 0){
-                    outputtext += "数字の $n は ${min(countofyournumber[n],countofcorrectans[n])} 個合っています\n"
+                    outputtext += "数字の $n は ${min(countofyournumber[n],countofcorrectans[n])} 個見つかりました\n"
                 }
-                numofcorrect += min(countofyournumber[n], countofcorrectans[n])
+                closenum += min(countofyournumber[n], countofcorrectans[n])//closenum にはこの時点で場所は関係なく数字が合っている個数が入る
             }
 
             for (i in 0..3) {
                 if (inputnumber[i] == randnumber[i]) {
                     yourans[i] = randnumber[i].toString()
-                    numofac++
+                    perfectnum++
                 }
             }
-            outputtext += "場所も数字も合っているのは $numofac 個。\n場所が違うものも含めて数字が合っているのが$numofcorrect 個\n"
+
+            closenum -= perfectnum //closenum に　場所は合っていないが数字が合っている個数を入れる
+
+            outputtext += "場所も数字も合っているのは $perfectnum 個。\n場所が違うものも含めて数字が合っているのが$closenum 個\n"
             if(randnumber != inputnumber){
+                historynumber += " Perfect " + perfectnum + "  Near " + closenum + "\n"
                 binding.textView01.text = outputtext
                 binding.history01.text = historynumber
-                numofac = 0
-                numofcorrect = 0
+                perfectnum = 0
+                closenum = 0
                 outputtext = ""
             }
             else{
