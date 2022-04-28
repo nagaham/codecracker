@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 outputtext = "入力が 4文字よりも多かったので判定できませんでした\n"
             }
             else{
-                outputtext = "\n"
+                outputtext = ""
             }
             outputtext += "$numoftrials 回目のトライアルが終わりました\n"
             numoftrials++
@@ -73,16 +73,17 @@ class MainActivity : AppCompatActivity() {
             closenum -= perfectnum //closenum に　場所は合っていないが数字が合っている個数を入れる
 
             outputtext += "場所も数字も合っているのは $perfectnum 個。\n場所が違うものも含めて数字が合っているのが$closenum 個\n"
+            historynumber += " Correct " + perfectnum + "  Close " + closenum + "\n"
+            binding.textView01.text = outputtext
+            binding.history01.text = historynumber
+
             if(randnumber != inputnumber){
-                historynumber += " Perfect " + perfectnum + "  Near " + closenum + "\n"
-                binding.textView01.text = outputtext
-                binding.history01.text = historynumber
                 perfectnum = 0
                 closenum = 0
                 outputtext = ""
             }
             else{
-                outputtext += "Great!!!\n" + "$numoftrials 回目の挑戦で成功しました！\n"
+                outputtext += "Great!!!\n" + "${numoftrials - 1} 回目の挑戦で成功しました！\n"
                 binding.textView01.text = outputtext
                 outputtext = ""
             }
