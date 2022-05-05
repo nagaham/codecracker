@@ -44,21 +44,23 @@ class MainActivity : AppCompatActivity() {
         //正解するまで繰り返す
             if(inputnumber.length < 4 ){
                 inputnumber = "____"
-                outputtext = "入力が 4文字未満なので判定できませんでした\n"
+                outputtext = "4文字未満で判定できず\n"
+                binding.inputnum01.text = null
             }
             else if(inputnumber.length > 4){
                 inputnumber = "____"
-                outputtext = "入力が 4文字よりも多かったので判定できませんでした\n"
+                outputtext = "4文字以上で判定できず\n"
+                binding.inputnum01.text = null
             }
             else{
                 outputtext = ""
             }
-            outputtext += "$numoftrials 回目のトライアルが終わりました\n"
+            outputtext += "⭐️$numoftrials 回目\n"
             numoftrials++
             for(n in 0 .. 9) countofyournumber[n] = inputnumber.count{ it == (n+48).toChar() }
             for(n in 0 .. 9){
                 if(min(countofyournumber[n],countofcorrectans[n]) != 0){
-                    outputtext += "数字の $n は ${min(countofyournumber[n],countofcorrectans[n])} 個見つかりました\n"
+                    outputtext += "$n を発見\n"
                 }
                 closenum += min(countofyournumber[n], countofcorrectans[n])//closenum にはこの時点で場所は関係なく数字が合っている個数が入る
             }
@@ -72,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
             closenum -= perfectnum //closenum に　場所は合っていないが数字が合っている個数を入れる
 
-            outputtext += "場所も数字も合っているのは $perfectnum 個。\n数字が合っているのが合計$closenum 個\n"
+            outputtext += "完璧 $perfectnum 個\n場所違い$closenum 個\n"
             historynumber += " Correct " + perfectnum + "  Close " + closenum + "\n"
             binding.textView01.text = outputtext
             binding.history01.text = historynumber
@@ -81,12 +83,13 @@ class MainActivity : AppCompatActivity() {
                 perfectnum = 0
                 closenum = 0
                 outputtext = ""
+                binding.inputnum01.text = null
             }
             else{
-                outputtext += "Great!!!\n" + "${numoftrials - 1} 回目の挑戦で成功しました！\n"
+                outputtext += "Great!!!\n" + "${numoftrials - 1} 回目で成功！\n"
                 binding.textView01.text = outputtext
                 outputtext = ""
-                binding.textViewfin.text = "😎🏆"
+                binding.textViewfin.text = "😎\n🏆"
             }
 //        println(yourans.joinToString(separator = ""))
         }
