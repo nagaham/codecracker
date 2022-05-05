@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
             closenum -= perfectnum //closenum に　場所は合っていないが数字が合っている個数を入れる
 
-            outputtext += "場所も数字も合っているのは $perfectnum 個。\n場所が違うものも含めて数字が合っているのが$closenum 個\n"
+            outputtext += "場所も数字も合っているのは $perfectnum 個。\n数字が合っているのが合計$closenum 個\n"
             historynumber += " Correct " + perfectnum + "  Close " + closenum + "\n"
             binding.textView01.text = outputtext
             binding.history01.text = historynumber
@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                 outputtext += "Great!!!\n" + "${numoftrials - 1} 回目の挑戦で成功しました！\n"
                 binding.textView01.text = outputtext
                 outputtext = ""
+                binding.textViewfin.text = "😎🏆"
             }
 //        println(yourans.joinToString(separator = ""))
         }
