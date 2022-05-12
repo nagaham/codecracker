@@ -11,6 +11,20 @@ import com.example.codecracker.databinding.ActivityMainBinding
 import java.lang.Math.random
 import kotlin.math.*
 
+//それぞれの文字が何個あるのかをカウントする
+var countofcorrectans = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について正解を収納
+var countofyournumber = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について自分の答えを収納
+var perfectnum = 0 //correct の数が何個あるか
+var closenum = 0 //文字列の中で正解の数字が何個あるか
+var numoftrials = 1 //挑戦回数をカウントする変数
+var outputtext = ""//出力用文字列
+var inputnumber = ""
+var historynumber = ""
+
+//初期設定で自分の答えを ____ にする
+var yourans = mutableListOf<String>("_","_","_","_")
+var randnumber = ""
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -20,23 +34,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //それぞれの文字が何個あるのかをカウントする
-        var countofcorrectans = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について正解を収納
-        var countofyournumber = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について自分の答えを収納
-        var perfectnum = 0
-        var closenum = 0 //文字列の中で正解の数字が何個あるか
-        var numoftrials = 1 //挑戦回数をカウントする変数
-        var outputtext = ""//出力用文字列
-        var inputnumber = ""
-        var historynumber = ""
-
-        //初期設定で自分の答えを ____ にする
-        var yourans = mutableListOf<String>("_","_","_","_")
-        val randnumber = ((10000*random()).toInt()).toString().padStart(4,'0')
-
-        for(n in 0 .. 9) countofcorrectans[n] = randnumber.count{ it == (n+48).toChar() }
+        determineRand() // 正解の数をランダムに選択
 
         binding.button01.setOnClickListener {
+
+            if(binding.button01.text == "Restart"){
+                initial()
+            }
+
             inputnumber = binding.inputnum01.text.toString()
             historynumber += inputnumber
             outputtext = ""//出力用文字列を初期化
@@ -57,7 +62,9 @@ class MainActivity : AppCompatActivity() {
             }
             outputtext += "⭐️$numoftrials 回目\n"
             numoftrials++
-            for(n in 0 .. 9) countofyournumber[n] = inputnumber.count{ it == (n+48).toChar() }
+
+            countOfNumCorrectClose() //correctとcloseの数字がそれぞれ何個あるのかをカウント
+
             for(n in 0 .. 9){
                 if(min(countofyournumber[n],countofcorrectans[n]) != 0){
                     outputtext += "$n を発見\n"
@@ -79,19 +86,53 @@ class MainActivity : AppCompatActivity() {
             binding.textView01.text = outputtext
             binding.history01.text = historynumber
 
-            if(randnumber != inputnumber){
-                perfectnum = 0
-                closenum = 0
-                outputtext = ""
-                binding.inputnum01.text = null
-            }
-            else{
-                outputtext += "Great!!!\n" + "${numoftrials - 1} 回目で成功！\n"
-                binding.textView01.text = outputtext
-                outputtext = ""
-                binding.textViewfin.text = "😎\n🏆"
-            }
-//        println(yourans.joinToString(separator = ""))
+            congratulations()
         }
+    }
+
+    // それぞれの変数を初期化
+    fun initial(){
+        countofcorrectans = listOf<Int>(0,0,0,0,0,0,0,0,0,0) as MutableList<Int> //0~9までの数字について正解を収納
+        countofyournumber = listOf<Int>(0,0,0,0,0,0,0,0,0,0) as MutableList<Int> //0~9までの数字について自分の答えを収納
+        perfectnum = 0 //correct の数が何個あるか
+        closenum = 0 //文字列の中で正解の数字が何個あるか
+        numoftrials = 1 //挑戦回数をカウントする変数
+        outputtext = ""//出力用文字列
+        inputnumber = ""
+        historynumber = ""
+
+//初期設定で自分の答えを ____ にする
+        yourans = mutableListOf<String>("_","_","_","_")
+        randnumber = ""
+        determineRand()
+        if(binding.button01.text == "Restart")binding.button01.text = "Check"
+    }
+
+    // 正解の数をランダムに選択し、正解の中にどの数が何個あるのかをカウント
+    fun determineRand(){
+        randnumber = ((10000*random()).toInt()).toString().padStart(4,'0')
+        for(n in 0 .. 9) countofcorrectans[n] = randnumber.count{ it == (n+48).toChar() }
+    }
+    //入力した文字列の中にcorrectとcloseの数字がそれぞれ何個あるのかをカウント
+    fun countOfNumCorrectClose(){
+        for(n in 0 .. 9) countofyournumber[n] = inputnumber.count{ it == (n+48).toChar() }
+    }
+    //完全に正解した場合の挙動
+    fun congratulations(){
+        if(randnumber != inputnumber){
+            perfectnum = 0
+            closenum = 0
+            outputtext = ""
+            binding.inputnum01.text = null
+        }
+        else{
+            outputtext += "Great!!!\n" + "${numoftrials - 1} 回目で成功！\n"
+            binding.textView01.text = outputtext
+            outputtext = ""
+            binding.textViewfin.text = "😎\n🏆"
+
+            binding.button01.text = "Restart"
+        }
+
     }
 }
