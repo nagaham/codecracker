@@ -22,8 +22,8 @@ var inputnumber = "" //入力した文字列を収納する変数
 var historynumber = "" //入力履歴と判定を残す変数
 
 //初期設定で自分の答えを ____ にする
-var yourans = mutableListOf<String>("_","_","_","_")
-var randnumber = ""
+var yourans = mutableListOf<String>("_","_","_","_") //自分が答えた文字列を収納するlist
+var randnumber = "" //ランダムに選ばれた正解の文字列を収納する変数
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,9 +42,8 @@ class MainActivity : AppCompatActivity() {
 
             else {
 
-                inputnumber = binding.inputnum01.text.toString()
-                historynumber += inputnumber
-                outputtext = ""
+                inputnumber = binding.inputnum01.text.toString() //答えた文字列をinputnumberに収納
+                historynumber += inputnumber //答えた文字列を履歴の変数hitorynumberにも収納
 
                 //正解するまで繰り返す
 
@@ -59,10 +58,7 @@ class MainActivity : AppCompatActivity() {
                     if (min(countofyournumber[n], countofcorrectans[n]) != 0) {
                         outputtext += "$n を発見\n"
                     }
-                    closenum += min(
-                        countofyournumber[n],
-                        countofcorrectans[n]
-                    )//closenum にはこの時点で場所は関係なく数字が合っている個数が入る
+                    closenum += min(countofyournumber[n], countofcorrectans[n])//closenum にはこの時点で場所は関係なく数字が合っている個数が入る
                 }
 
                 for (i in 0..3) {
@@ -144,10 +140,26 @@ class MainActivity : AppCompatActivity() {
             outputtext += "Great!!!\n" + "${numoftrials - 1} 回目で成功！\n"
             binding.textView01.text = outputtext
             outputtext = ""
-            binding.textViewfin.text = "😎\n🎉"
+
+            award() //回数に応じて表示するコメントを変化させる
 
             binding.button01.text = "Restart"
         }
+
+    }
+    //　完全正解するのに必要な回数ごとに表示を決める
+    fun award(){
+        if( numoftrials-1 == 1) binding.textViewfin.text = "😎🏆"
+        else if( numoftrials-1 == 2) binding.textViewfin.text = "😃"
+        else if( numoftrials-1 == 3) binding.textViewfin.text = "☺️"
+        else if( numoftrials-1 == 4) binding.textViewfin.text = "😄"
+        else if( numoftrials-1 == 5) binding.textViewfin.text = "😃"
+        else if( numoftrials-1 == 6) binding.textViewfin.text = "🌟"
+        else if( numoftrials-1 == 7) binding.textViewfin.text = "✨"
+        else if( numoftrials-1 == 8) binding.textViewfin.text = "⚡️"
+        else if( numoftrials-1 == 9) binding.textViewfin.text = "💫"
+        else if( numoftrials-1 == 10) binding.textViewfin.text = "🌈"
+        else  binding.textViewfin.text = "😵‍"
 
     }
 }
