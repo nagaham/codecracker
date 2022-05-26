@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                     closenum += min(countofyournumber[n], countofcorrectans[n])//closenum にはこの時点で場所は関係なく数字が合っている個数が入る
                 }
 
-                discoverynum = discoverynum.split(' ').toSet().toString()
+                discoverynum = discoverynum.split(' ').toSet().toString().drop(1).dropLast(3)
 
                 for (i in 0..3) {
                     if (inputnumber[i] == randnumber[i]) {
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 outputtext += "完璧 $perfectnum 個\n場所違い$closenum 個\n"
                 historynumber += " Correct " + perfectnum + "  Close " + closenum + "\n"
                 binding.textView01.text = outputtext
-                if(discoverynum != null) binding.textViewfin.text = discoverynum + "を発見"
+                binding.textViewfin.text = "発見した数\n$discoverynum"
                 binding.history01.text = historynumber
                 discoverynum = ""
 
