@@ -39,7 +39,7 @@
         android:id="@+id/history01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" "
+        android:text="🏃🏃🏃🏃"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/inputnum01"
         app:layout_constraintTop_toBottomOf="@+id/inputnum01" />
@@ -48,8 +48,8 @@
         android:id="@+id/textViewfin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" "
-        android:textSize="96sp"
+        android:text="🍀"
+        android:textSize="48sp"
         app:layout_constraintStart_toStartOf="@+id/textView01"
         app:layout_constraintTop_toBottomOf="@+id/textView01" />
 

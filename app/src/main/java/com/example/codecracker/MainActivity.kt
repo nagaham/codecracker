@@ -18,6 +18,7 @@ var perfectnum = 0 //correct の数が何個あるか
 var closenum = 0 //文字列の中で正解の数字が何個あるか
 var numoftrials = 1 //挑戦回数をカウントする変数
 var outputtext = ""//出力用文字列
+var discoverynum = "" //発見した文字列を収納する変数
 var inputnumber = "" //入力した文字列を収納する変数
 var historynumber = "" //入力履歴と判定を残す変数
 
@@ -38,16 +39,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.button01.setOnClickListener {
 
-            if(binding.button01.text == "Restart") initial()//初期化して乱数も取り直す
+            if(binding.button01.text == "Restart") initial()//Restartの場合、初期化して乱数も取り直す
 
             else {
 
                 inputnumber = binding.inputnum01.text.toString() //答えた文字列をinputnumberに収納
-                historynumber += inputnumber //答えた文字列を履歴の変数hitorynumberにも収納
+                historynumber += inputnumber //答えた文字列を履歴の変数historynumberにも収納
 
-                //正解するまで繰り返す
-
-                judgeNumOfStrings()
+                judgeNumOfStrings() //文字数のみをジャッジ
 
                 outputtext += "⭐️$numoftrials 回目\n"
                 numoftrials++
@@ -56,10 +55,12 @@ class MainActivity : AppCompatActivity() {
 
                 for (n in 0..9) {
                     if (min(countofyournumber[n], countofcorrectans[n]) != 0) {
-                        outputtext += "$n を発見\n"
+                        discoverynum += "$n "
                     }
                     closenum += min(countofyournumber[n], countofcorrectans[n])//closenum にはこの時点で場所は関係なく数字が合っている個数が入る
                 }
+
+                discoverynum = discoverynum.split(' ').toSet().toString()
 
                 for (i in 0..3) {
                     if (inputnumber[i] == randnumber[i]) {
@@ -73,7 +74,9 @@ class MainActivity : AppCompatActivity() {
                 outputtext += "完璧 $perfectnum 個\n場所違い$closenum 個\n"
                 historynumber += " Correct " + perfectnum + "  Close " + closenum + "\n"
                 binding.textView01.text = outputtext
+                if(discoverynum != null) binding.textViewfin.text = discoverynum + "を発見"
                 binding.history01.text = historynumber
+                discoverynum = ""
 
                 congratulations()
             }
@@ -104,6 +107,7 @@ class MainActivity : AppCompatActivity() {
         closenum = 0 //文字列の中で正解の数字が何個あるか
         numoftrials = 1 //挑戦回数をカウントする変数
         outputtext = ""//出力用文字列
+        discoverynum = "" // 発見した文字列を収納する文字列変数
         inputnumber = ""
         historynumber = ""
 
