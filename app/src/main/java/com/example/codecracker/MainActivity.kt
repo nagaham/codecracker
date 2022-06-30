@@ -11,6 +11,7 @@ import com.example.codecracker.databinding.ActivityMainBinding
 import java.lang.Math.random
 import kotlin.math.*
 
+// git push　できなかった
 //それぞれの文字が何個あるのかをカウントする
 var countofcorrectans = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について正解を収納
 var countofyournumber = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について自分の答えを収納
