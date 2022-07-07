@@ -11,20 +11,24 @@ import com.example.codecracker.databinding.ActivityMainBinding
 import java.lang.Math.random
 import kotlin.math.*
 
-//それぞれの文字が何個あるのかをカウントする
-var countofcorrectans = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について正解を収納
-var countofyournumber = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について自分の答えを収納
-var perfectnum = 0 //correct の数が何個あるか
-var closenum = 0 //文字列の中で正解の数字が何個あるか
+var countofcorrectans = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について正解の数字がそれぞれ何個ずつあるのかを数えて収納
+var countofyournumber = mutableListOf<Int>(0,0,0,0,0,0,0,0,0,0) //0~9までの数字について自分の答えた数字がそれぞれ何個ずつあるのかを数えて収納
+var numofperf = 0 //correct の数が何個あるか
+var numofcorrect = 0 //文字列の中のn文字目に正解の数字が何個あるか
 var numoftrials = 1 //挑戦回数をカウントする変数
+
 var outputtext = ""//出力用文字列
-var discoverynum = "" //発見した文字列を収納する変数
 var inputnumber = "" //入力した文字列を収納する変数
-var historynumber = "" //入力履歴と判定を残す変数
+
 
 //初期設定で自分の答えを ____ にする
 var yourans = mutableListOf<String>("_","_","_","_") //自分が答えた文字列を収納するlist
+var digitlimit = "" //答えの桁数の上限
+var digitofans = 0 //答えの桁数
+var digittemp = 1L // randnumberを決める際の一時的な変数
 var randnumber = "" //ランダムに選ばれた正解の文字列を収納する変数
+var historynumber = "" //入力履歴と判定を残す変数
+var discoverynum = "" //発見した文字列を収納する変数
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,11 +39,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        determineDigit() //桁数を決定
         determineRand() // 正解の数をランダムに選択
 
         binding.button01.setOnClickListener {
 
-            if(binding.button01.text == "Restart") initial()//Restartの場合、初期化して乱数も取り直す
+            if(binding.button01.text == "Restart") {
+                initial()
+            }//Restartの場合、初期化して乱数も取り直す
 
             else {
 
@@ -57,21 +64,21 @@ class MainActivity : AppCompatActivity() {
                     if (min(countofyournumber[n], countofcorrectans[n]) != 0) {
                         discoverynum += "$n "
                     }
-                    closenum += min(countofyournumber[n], countofcorrectans[n])//closenum にはこの時点で場所は関係なく数字が合っている個数が入る
+                    numofcorrect += min(countofyournumber[n], countofcorrectans[n])//numofcorrect にはこの時点で場所は関係なく数字が合っている個数が入る
                 }
 
                 discoverynum = discoverynum.split(' ').toSet().toString().drop(1).dropLast(3) //発見した文字を文字列型に収納
                 for (i in 0..3) {
                     if (inputnumber[i] == randnumber[i]) {
                         yourans[i] = randnumber[i].toString()
-                        perfectnum++
+                        numofperf ++
                     }
                 }
 
-                closenum -= perfectnum //closenum に　場所は合っていないが数字が合っている個数を入れる
+                numofcorrect -= numofperf  //numofcorrect に　場所は合っていないが数字が合っている個数を入れる
 
-                outputtext += "完璧 $perfectnum 個\n場所違い$closenum 個\n"
-                historynumber += " Correct " + perfectnum + "  Close " + closenum + "\n"
+                outputtext += "完璧 ${numofperf } 個\n場所違い$numofcorrect 個\n"
+                historynumber += " Correct " + numofperf + "  Close " + numofcorrect + "\n"
                 binding.textView01.text = outputtext
                 binding.textViewfin.text = "発見した数\n$discoverynum"
                 binding.history01.text = historynumber
@@ -80,6 +87,9 @@ class MainActivity : AppCompatActivity() {
                 congratulations()
             }
         }
+    }
+    fun determineDigit(){
+        digitlimit = "6" //桁数の上限を設定
     }
 
     // 入力した文字数が正しいかどうかを判断する
@@ -102,8 +112,8 @@ class MainActivity : AppCompatActivity() {
     fun initial(){
         countofcorrectans = listOf<Int>(0,0,0,0,0,0,0,0,0,0) as MutableList<Int> //0~9までの数字について正解を収納
         countofyournumber = listOf<Int>(0,0,0,0,0,0,0,0,0,0) as MutableList<Int> //0~9までの数字について自分の答えを収納
-        perfectnum = 0 //correct の数が何個あるか
-        closenum = 0 //文字列の中で正解の数字が何個あるか
+        numofperf = 0 //correct の数が何個あるか
+        numofcorrect = 0 //文字列の中で正解の数字が何個あるか
         numoftrials = 1 //挑戦回数をカウントする変数
         outputtext = ""//出力用文字列
         discoverynum = "" // 発見した文字列を収納する文字列変数
@@ -134,8 +144,8 @@ class MainActivity : AppCompatActivity() {
     //完全に正解した場合の挙動
     fun congratulations(){
         if(randnumber != inputnumber){
-            perfectnum = 0
-            closenum = 0
+            numofperf = 0
+            numofcorrect = 0
             outputtext = ""
             binding.inputnum01.text = null
         }
