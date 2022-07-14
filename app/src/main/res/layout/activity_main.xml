@@ -10,8 +10,8 @@
         android:id="@+id/textView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/button01"
-        app:layout_constraintTop_toBottomOf="@+id/button01"
+        app:layout_constraintStart_toStartOf="@+id/giveup"
+        app:layout_constraintTop_toBottomOf="@+id/giveup"
         tools:text="ここに表示されます" />
 
     <Button
@@ -58,6 +58,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Give Up"
+        app:layout_constraintStart_toStartOf="@+id/button01"
+        app:layout_constraintTop_toBottomOf="@+id/button01" />
+
+    <TextView
+        android:id="@+id/text01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test01"
         app:layout_constraintStart_toStartOf="@+id/textViewfin"
         app:layout_constraintTop_toBottomOf="@+id/textViewfin" />
 

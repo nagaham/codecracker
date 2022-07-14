@@ -21,7 +21,7 @@ var inputnumber = "" //入力した文字列を収納する変数
 var outputtext = ""//出力用文字列 textView01に表示
 
 //初期設定で自分の答えを ____ にする
-var yourans = mutableListOf<String>("_","_","_","_","_","_","_","_","_","_") //自分が答えた文字列を収納するlist
+var yourans = mutableListOf<String>("_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_") //自分が答えた文字列を収納するlist
 var digitlimit = "" //答えの桁数の上限
 var digitofans = 0 //答えの桁数
 var digittemp = 1L // randnumberを決める際の一時的な変数
@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.giveup.setOnClickListener{
             binding.giveup.text = randnumber
-        }
+        }//giveupボタンを押すと正解の文字列を表示
+
         binding.button01.setOnClickListener {
 
             if(binding.button01.text == "Restart") {
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 longOrShort()//入力した文字列が正解の文字数よりも長い場合は削り、短い場合はxを付け足す
 
                 discoverynum = discoverynum.split(' ').toSet().toString().drop(1).dropLast(3) //発見した文字を文字列型に収納
-                for (i in 0..3) {
+                for (i in 0 until digitofans) {
                     if (inputnumber[i] == randnumber[i]) {
                         yourans[i] = randnumber[i].toString()
                         numofperf ++
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                 outputtext += "完璧 ${numofperf } 個\n場所違い$numofcorrect 個\n"
                 historynumber += " Correct " + numofperf + "  Close " + numofcorrect + "\n"
                 binding.textView01.text = outputtext
-                binding.textViewfin.text = "発見した数\n$discoverynum"
+                binding.textViewfin.text = "$discoverynum"
                 binding.history01.text = historynumber
                 discoverynum = ""
 
@@ -96,6 +97,8 @@ class MainActivity : AppCompatActivity() {
         discoverynum = "" // 発見した文字列を収納する文字列変数
         inputnumber = ""
         historynumber = ""
+        binding.giveup.text = "Give Up"
+        digittemp = 1L
 
         binding.textViewfin.text = null //完璧に正解したときの絵文字を初期化
         binding.history01.text = null //履歴の表示欄をリセット
@@ -103,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         binding.textView01.text = null //判定時に出るコメントをリセット
 
         //初期設定で自分の答えを ____ にする
-        yourans = mutableListOf<String>("_","_","_","_")
+        yourans = mutableListOf<String>("_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_")
         randnumber = ""
         determineRand()
         if(binding.button01.text == "Restart")binding.button01.text = "Check"
@@ -122,13 +125,13 @@ class MainActivity : AppCompatActivity() {
     }
     fun countOfClose(){
         for(n in 0 .. 9) countofyournumber[n] = inputnumber.count{ it == (n+48).toChar() }
-        for (n in 0..9) {
-            if (min(countofyournumber[n], countofcorrectans[n]) != 0) {
-                discoverynum += "$n "
+        for(n in 0 .. 9){
+            if(min(countofyournumber[n],countofcorrectans[n]) != 0) {
+                discoverynum += "$n"+"を${min(countofyournumber[n],countofcorrectans[n])}個発見\n"  //発見した文字列を収納
             }
-            numofcorrect += min(countofyournumber[n], countofcorrectans[n])//numofcorrect にはこの時点で場所は関係なく数字が合っている個数が入る
+            numofcorrect += min(countofyournumber[n], countofcorrectans[n])//文字列の中の文字ごとに数字が何個あるのかをカウントしたものと正解の数字が何個あるのかを比較
         }
-    }    //入力した文字列の中に場所は関係なく入力した数字の中に正解が何個あるのかをカウント
+    }//inputnumberの中に0~9までの数字がそれぞれ何個あるのかを判定
 
     fun longOrShort(){
         if(inputnumber.length < randnumber.length) inputnumber = inputnumber.padEnd(digitofans,'x')
