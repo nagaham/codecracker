@@ -17,12 +17,11 @@ var numofperf = 0 //correct の数が何個あるか
 var numofcorrect = 0 //文字列の中のn文字目に正解の数字が何個あるか
 var numoftrials = 1 //挑戦回数をカウントする変数
 
-var outputtext = ""//出力用文字列
 var inputnumber = "" //入力した文字列を収納する変数
-
+var outputtext = ""//出力用文字列 textView01に表示
 
 //初期設定で自分の答えを ____ にする
-var yourans = mutableListOf<String>("_","_","_","_") //自分が答えた文字列を収納するlist
+var yourans = mutableListOf<String>("_","_","_","_","_","_","_","_","_","_") //自分が答えた文字列を収納するlist
 var digitlimit = "" //答えの桁数の上限
 var digitofans = 0 //答えの桁数
 var digittemp = 1L // randnumberを決める際の一時的な変数
@@ -42,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         determineDigit() //桁数を決定
         determineRand() // 正解の数をランダムに選択
 
+        binding.giveup.setOnClickListener{
+            binding.giveup.text = randnumber
+        }
         binding.button01.setOnClickListener {
 
             if(binding.button01.text == "Restart") {
@@ -49,23 +51,12 @@ class MainActivity : AppCompatActivity() {
             }//Restartの場合、初期化して乱数も取り直す
 
             else {
-
                 inputnumber = binding.inputnum01.text.toString() //答えた文字列をinputnumberに収納
                 historynumber += inputnumber //答えた文字列を履歴の変数historynumberにも収納
+                numoftrials++ //挑戦回数をカウント
 
-                judgeNumOfStrings() //文字数のみをジャッジ
-
-                outputtext += "⭐️$numoftrials 回目\n"
-                numoftrials++
-
-                countOfNumCorrectClose() //correctとcloseの数字がそれぞれ何個あるのかをカウント
-
-                for (n in 0..9) {
-                    if (min(countofyournumber[n], countofcorrectans[n]) != 0) {
-                        discoverynum += "$n "
-                    }
-                    numofcorrect += min(countofyournumber[n], countofcorrectans[n])//numofcorrect にはこの時点で場所は関係なく数字が合っている個数が入る
-                }
+                countOfClose() //入力した文字列の中に場所は関係なく入力した数字の中に正解が何個あるのかをカウント
+                longOrShort()//入力した文字列が正解の文字数よりも長い場合は削り、短い場合はxを付け足す
 
                 discoverynum = discoverynum.split(' ').toSet().toString().drop(1).dropLast(3) //発見した文字を文字列型に収納
                 for (i in 0..3) {
@@ -93,21 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 入力した文字数が正しいかどうかを判断する
-    fun judgeNumOfStrings(){
-        if(inputnumber.length < 4 ){
-            inputnumber = "____"
-            outputtext = "4文字未満で判定できず\n"
-            binding.inputnum01.text = null
-        }
-        else if(inputnumber.length > 4){
-            inputnumber = "____"
-            outputtext = "4文字以上で判定できず\n"
-            binding.inputnum01.text = null
-        }
-        else{
-            outputtext = ""
-        }
-    }
+
     // それぞれの変数を初期化
     fun initial(){
         countofcorrectans = listOf<Int>(0,0,0,0,0,0,0,0,0,0) as MutableList<Int> //0~9までの数字について正解を収納
@@ -134,15 +111,31 @@ class MainActivity : AppCompatActivity() {
 
     // 正解の数をランダムに選択し、正解の中にどの数が何個あるのかをカウント
     fun determineRand(){
-        randnumber = ((10000*random()).toInt()).toString().padStart(4,'0')
+        digitofans = max(3,(random()*digitlimit.toInt()+1).toInt())//digitofans にはランダムに選ばれた答えの桁数
+
+        for (i in 1..digitofans) digittemp*=10L //digittempは桁数が正しくなっている仮置きの数で100..の形式
+        //ランダムに選ばれた数を左から0埋めパディングしたものがrandnumber
+        randnumber = ((digittemp* random()).toLong()).toString().padStart(digitofans,'0')
+
+        //それぞれの文字が何個あるのかをカウントする
         for(n in 0 .. 9) countofcorrectans[n] = randnumber.count{ it == (n+48).toChar() }
     }
-    //入力した文字列の中にcorrectとcloseの数字がそれぞれ何個あるのかをカウント
-    fun countOfNumCorrectClose(){
+    fun countOfClose(){
         for(n in 0 .. 9) countofyournumber[n] = inputnumber.count{ it == (n+48).toChar() }
-    }
-    //完全に正解した場合の挙動
-    fun congratulations(){
+        for (n in 0..9) {
+            if (min(countofyournumber[n], countofcorrectans[n]) != 0) {
+                discoverynum += "$n "
+            }
+            numofcorrect += min(countofyournumber[n], countofcorrectans[n])//numofcorrect にはこの時点で場所は関係なく数字が合っている個数が入る
+        }
+    }    //入力した文字列の中に場所は関係なく入力した数字の中に正解が何個あるのかをカウント
+
+    fun longOrShort(){
+        if(inputnumber.length < randnumber.length) inputnumber = inputnumber.padEnd(digitofans,'x')
+        else if(inputnumber.length > randnumber.length) inputnumber = inputnumber.dropLast(inputnumber.length - digitofans)
+    }//入力した文字列が正解の文字数よりも長い場合は削り、短い場合はxを付け足す
+
+    fun congratulations(){    //完全に正解した場合の挙動
         if(randnumber != inputnumber){
             numofperf = 0
             numofcorrect = 0
