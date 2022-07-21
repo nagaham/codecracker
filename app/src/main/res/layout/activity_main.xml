@@ -40,19 +40,10 @@
         android:id="@+id/history01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="donguricorocoro"
+        android:text="History is here."
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/inputnum01"
         app:layout_constraintTop_toBottomOf="@+id/inputnum01" />
-
-    <TextView
-        android:id="@+id/textViewfin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="donburico"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/textView01"
-        app:layout_constraintTop_toBottomOf="@+id/textView01" />
 
     <Button
         android:id="@+id/giveup"
@@ -69,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:text="hint"
-        app:layout_constraintEnd_toEndOf="@+id/button01"
+        app:layout_constraintStart_toStartOf="@+id/button01"
         app:layout_constraintTop_toBottomOf="@+id/button01" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

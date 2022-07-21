@@ -67,12 +67,14 @@ class MainActivity : AppCompatActivity() {
 
                 numofcorrect -= numofperf  //numofcorrect に　場所は合っていないが数字が合っている個数を入れる
 
-                outputtext += "完璧 ${numofperf } 個\n場所違い$numofcorrect 個\n"
                 historynumber += " Correct " + numofperf + "  Close " + numofcorrect + "\n"
+                outputtext += discoverynum
                 binding.textView01.text = outputtext
-                binding.textViewfin.text = "$discoverynum"
                 binding.history01.text = historynumber
                 discoverynum = ""
+
+                binding.giveup.text = "Give Up"
+                binding.hintButton.text = "Hint"
 
                 congratulations()
             }
@@ -105,7 +107,6 @@ class MainActivity : AppCompatActivity() {
         binding.hintButton.text = "Hint"
         digittemp = 1L
 
-        binding.textViewfin.text = null //完璧に正解したときの絵文字を初期化
         binding.history01.text = null //履歴の表示欄をリセット
         binding.inputnum01.text = null //入力した文字列を消去
         binding.textView01.text = null //判定時に出るコメントをリセット
@@ -132,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         for(n in 0 .. 9) countofyournumber[n] = inputnumber.count{ it == (n+48).toChar() }
         for(n in 0 .. 9){
             if(min(countofyournumber[n],countofcorrectans[n]) != 0) {
-                discoverynum += "$n"+"を${min(countofyournumber[n],countofcorrectans[n])}個発見\n"  //発見した文字列を収納
+                discoverynum += "$n"+"を${min(countofyournumber[n],countofcorrectans[n])}個発見 \n"  //発見した文字列を収納
             }
             numofcorrect += min(countofyournumber[n], countofcorrectans[n])//文字列の中の文字ごとに数字が何個あるのかをカウントしたものと正解の数字が何個あるのかを比較
         }
@@ -151,11 +152,11 @@ class MainActivity : AppCompatActivity() {
             binding.inputnum01.text = null
         }
         else{
-            outputtext += "Great!!!\n" + "${numoftrials - 1} 回目で成功！\n"
-            binding.textView01.text = outputtext
             outputtext = ""
+            outputtext += "Great!!!\n" + "${numoftrials - 1} 回目で成功！\n"
 
             award() //回数に応じて表示するコメントを変化させる
+            binding.textView01.text = outputtext
 
             binding.button01.text = "Restart"
         }
@@ -163,17 +164,17 @@ class MainActivity : AppCompatActivity() {
     }
     //　完全正解するのに必要な回数ごとに表示を決める
     fun award(){
-        if( numoftrials-1 == 1) binding.textViewfin.text = "😎🏆"
-        else if( numoftrials-1 == 2) binding.textViewfin.text = "😃"
-        else if( numoftrials-1 == 3) binding.textViewfin.text = "☺️"
-        else if( numoftrials-1 == 4) binding.textViewfin.text = "😄"
-        else if( numoftrials-1 == 5) binding.textViewfin.text = "😃"
-        else if( numoftrials-1 == 6) binding.textViewfin.text = "🌟"
-        else if( numoftrials-1 == 7) binding.textViewfin.text = "✨"
-        else if( numoftrials-1 == 8) binding.textViewfin.text = "⚡️"
-        else if( numoftrials-1 == 9) binding.textViewfin.text = "💫"
-        else if( numoftrials-1 == 10) binding.textViewfin.text = "🌈"
-        else  binding.textViewfin.text = "😵‍"
+        if( numoftrials-1 == 1) outputtext += "😎🏆 \n"
+        else if( numoftrials-1 == 2) outputtext += "😃 \n"
+        else if( numoftrials-1 == 3) outputtext += "☺️ \n"
+        else if( numoftrials-1 == 4) outputtext += "😄 \n"
+        else if( numoftrials-1 == 5) outputtext += "😃 \n"
+        else if( numoftrials-1 == 6) outputtext += "🌟 \n"
+        else if( numoftrials-1 == 7) outputtext += "✨ \n"
+        else if( numoftrials-1 == 8) outputtext += "⚡️ \n"
+        else if( numoftrials-1 == 9) outputtext += "💫 \n"
+        else if( numoftrials-1 == 10) outputtext += "🌈 \n"
+        else  outputtext += "😵‍ \n"
 
     }
 }
