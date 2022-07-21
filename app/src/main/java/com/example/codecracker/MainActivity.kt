@@ -82,10 +82,10 @@ class MainActivity : AppCompatActivity() {
         }//giveupボタンを押すと正解の文字列を表示
         binding.hintButton.setOnClickListener{
             binding.hintButton.text = yourans.joinToString(",").replace(",","").substring(0,randnumber.length)
-        }//giveupボタンを押すと正解の文字列を表示
+        }//hintボタンを押すと正解の文字列数と自分の正解しているところを表示
     }
     fun determineDigit(){
-        digitlimit = "6" //桁数の上限を設定
+        digitlimit = "7" //桁数の上限を設定
     }
 
     // 入力した文字数が正しいかどうかを判断する
@@ -102,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         inputnumber = ""
         historynumber = ""
         binding.giveup.text = "Give Up"
+        binding.hintButton.text = "Hint"
         digittemp = 1L
 
         binding.textViewfin.text = null //完璧に正解したときの絵文字を初期化
