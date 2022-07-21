@@ -41,9 +41,7 @@ class MainActivity : AppCompatActivity() {
         determineDigit() //桁数を決定
         determineRand() // 正解の数をランダムに選択
 
-        binding.giveup.setOnClickListener{
-            binding.giveup.text = randnumber
-        }//giveupボタンを押すと正解の文字列を表示
+
 
         binding.button01.setOnClickListener {
 
@@ -79,6 +77,12 @@ class MainActivity : AppCompatActivity() {
                 congratulations()
             }
         }
+        binding.giveup.setOnClickListener{
+            binding.giveup.text = randnumber
+        }//giveupボタンを押すと正解の文字列を表示
+        binding.hintButton.setOnClickListener{
+            binding.hintButton.text = yourans.joinToString(",").replace(",","").substring(0,randnumber.length)
+        }//giveupボタンを押すと正解の文字列を表示
     }
     fun determineDigit(){
         digitlimit = "6" //桁数の上限を設定
